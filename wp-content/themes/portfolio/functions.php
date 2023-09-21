@@ -18,17 +18,7 @@ function portfolio_support_theme(){
 }
 add_action('after_setup_theme', 'portfolio_support_theme');
 
-//Chargement des liens Bootstrap
-
-function portfolio_style_bootstrap() {
-	wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css');
-	wp_enqueue_style( 'icons bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
-	wp_enqueue_script( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js');
-}
-add_action('wp_enqueue_scripts', 'portfolio_style_bootstrap');
-
-
-// Chargement de ma feuille de style CSS
+// Chargement de ma feuille de style CSS et fichier JS
 
 function portfolio_my_style() {
     wp_enqueue_style( 'mon-style', get_stylesheet_uri());
@@ -36,21 +26,18 @@ function portfolio_my_style() {
 }
 add_action('wp_enqueue_scripts', 'portfolio_my_style');
 
-// Ajout modification menu WP en Bootstrap
-
-function portfolio_menu_class($classes){
-    $classes[] = 'nav-link';
-    return $classes;
+function portfolio_my_scripts(){
+  wp_enqueue_script('mon-script', get_template_directory_uri() . '/scripts/script.js', array(), '1.0', true);
 }
+add_action('wp_enqueue_scripts', 'portfolio_my_scripts');
 
-function portfolio_menu_link_class($attrs){
-    $attrs['class'] = 'nav-link';
-    return $attrs;
+// Chargement des icones
+
+function charger_icones() {
+    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css' );
+    wp_enqueue_style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons' );
 }
-
-add_filter('nav_menu_css_class', 'portfolio_menu_class');
-add_filter('nav_menu_link_attributes', 'portfolio_menu_link_class');
-
+add_action( 'wp_enqueue_scripts', 'charger_icones' );
 
 // Création Cpt Compétences
 
